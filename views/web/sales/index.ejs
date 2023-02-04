@@ -1,0 +1,111 @@
+
+<%- include('../../home/home.ejs') %> 
+<div class="container ml-10 my-10">
+       
+        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            <a href = "/home/sale/create"> Create </a>
+          </button>
+  
+     
+
+<form method = "get" class="mb-8 mt-2 flex max-w-xs h-10">
+    <input class="datepicker shadow appearance-none border rounded  text-gray-700 leading-tight focus:outline-none focus:shadow-outline pl-2" type="text" name = "start_date" placeholder="From date">
+    <span class="p-2"> To </span>
+    <input class="datepicker  pl-2 end_date ml-4 shadow appearance-none border rounded  focus:outline-none focus:shadow-outline" type="text" name = "end_date" placeholder="To date">
+
+    <button class="bg-blue-500 ml-10 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+        Get
+      </button>
+
+</form>
+    
+
+
+     <table border="1" width = "50%" cellpaddig = "4">
+         <thead>
+             <th> ID: </th>
+             <th> Name: </th>
+             <th> Amount: </th>
+             <th> Type: </th>
+         </thead>
+
+         <tbody>
+             <%
+                for( let sale of prods) { %>
+                    <tr>
+                        <td> <%= sale.id %> </td>
+                        <td> <%= sale.amount %>  </td>
+                        <td> 
+                           
+                            <%=  new Date(sale.sale_date).toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric"})  %>  </td>
+                            <td>
+                                <% if (sale.type === 1) { %>
+                                    Cash/Account
+                                <% } else if (sale.type === 2) { %>
+                                    Zomato
+                                <% } else if (sale.type === 3) { %>
+                                    Swiggy
+                                
+
+                                <%  } else { %>
+                                    Other
+                                <% }  %>
+
+                            </td>
+                    </tr>
+                <% } %>
+             %>
+            
+         </tbody>
+     </table>
+
+  <p class="ml-2 mt-4  ">   Total Amount: <%= totalAmount %> </p>
+    
+
+
+</div>
+<script>
+
+    const  formatter =  (input, date, instance) => {
+        const value = date.toLocaleDateString()
+        input.value = value // => '1/1/2099'
+  }
+
+     datepicker('.datepicker',)
+     datepicker('.end_date')
+
+    </script>
+
+<style>
+     .card {
+         width:5rem;
+        padding: 20px;
+        margin:20px;
+        border:1px dashed orange;
+        border-radius: 10px;
+    }
+    .card a {
+        font-size:2rem;
+        text-decoration: none;
+        letter-spacing: 0.5px;
+    }
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 50%;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        td {
+            padding: 1rem;
+        }
+        tr:nth-child(even) {
+        background-color: #dddddd;
+        }
+</style>
+
